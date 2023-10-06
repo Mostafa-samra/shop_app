@@ -20,7 +20,7 @@ class OnBordingScreen extends StatefulWidget {
 }
 
 class _OnBordingScreenState extends State<OnBordingScreen> {
-  @override
+  // ignore: annotate_overrides
   Widget build(BuildContext context) {
     var boardController = PageController();
     List<BoadingModel> boarding = [
