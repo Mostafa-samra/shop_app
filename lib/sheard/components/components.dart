@@ -11,12 +11,12 @@ void navigateAndFinish(
   context,
   widget,
 ) =>
-    Navigator.pushReplacement(
+    /* Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => widget,
-        ));
- /*    Navigator.pushAndRemoveUntil(
+        )); */
+    Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
         builder: (context) => widget,
@@ -24,4 +24,4 @@ void navigateAndFinish(
       (route) {
         return false;
       },
-    ); */
+    );

@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:shop_app/modules/login/login_screen.dart';
 import 'package:shop_app/sheard/components/components.dart';
@@ -26,6 +24,7 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
   @override
   Widget build(BuildContext context) {
     var boardController = PageController();
+
     List<BoadingModel> boarding = [
       BoadingModel(
           image: 'assets/images/women.webp',
@@ -52,20 +51,20 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
             onPressed: () {
               navigateAndFinish(
                 context,
-                LogInScreen(),
+                const LogInScreen(),
               );
             },
-            child: Text('Skip'),
+            child: const Text('Skip'),
           ),
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.all(30.0),
+        padding: const EdgeInsets.all(30.0),
         child: Column(
           children: [
             Expanded(
               child: PageView.builder(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 controller: boardController,
                 onPageChanged: (int index) {
                   if (index == boarding.length - 1) {
@@ -91,7 +90,7 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                 SmoothPageIndicator(
                   controller: boardController,
                   count: boarding.length,
-                  effect: ExpandingDotsEffect(
+                  effect: const ExpandingDotsEffect(
                       dotColor: Colors.grey,
                       activeDotColor: defaultColor,
                       dotHeight: 10,
@@ -99,7 +98,7 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                       dotWidth: 10,
                       spacing: 5),
                 ),
-                Spacer(),
+                const Spacer(),
                 FloatingActionButton(
                   onPressed: () {
                     print(isLast);
@@ -108,22 +107,19 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => LogInScreen(),
+                            builder: (context) => const LogInScreen(),
                           ));
-                      /*   navigateAndFinish(
-                        context,
-                         LogInScreen(),
-                      ); */
+
                       print('object');
                     } else {
                       boardController.nextPage(
-                          duration: Duration(
+                          duration: const Duration(
                             milliseconds: 750,
                           ),
                           curve: Curves.fastEaseInToSlowEaseOut);
                     }
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.arrow_forward_ios,
                   ),
                 ),
@@ -144,21 +140,21 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
               // width: 200.0,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 30.2,
           ),
           Text(
             model.title,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 24.0,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 15.2,
           ),
           Text(
             model.body,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 15.0,
             ),
           ),
