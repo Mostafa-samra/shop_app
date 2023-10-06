@@ -21,29 +21,29 @@ class OnBordingScreen extends StatefulWidget {
 
 class _OnBordingScreenState extends State<OnBordingScreen> {
   bool isLast = false;
+  var boardController = PageController();
+
+  List<BoadingModel> boarding = [
+    BoadingModel(
+        image: 'assets/images/women.webp',
+        title: 'on Board 1 Title',
+        body: 'on Board 1 Body'),
+    BoadingModel(
+        image: 'assets/images/m2.jpg',
+        title: 'on Board 2 Title',
+        body: 'on Board 2 Body'),
+    BoadingModel(
+        image: 'assets/images/m3.jpg',
+        title: 'on Board 3 Title',
+        body: 'on Board 3 Body'),
+    BoadingModel(
+        image: 'assets/images/m1.jpg',
+        title: 'on Board 4 Title',
+        body: 'on Board 4 Body'),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    var boardController = PageController();
-
-    List<BoadingModel> boarding = [
-      BoadingModel(
-          image: 'assets/images/women.webp',
-          title: 'on Board 1 Title',
-          body: 'on Board 1 Body'),
-      BoadingModel(
-          image: 'assets/images/m2.jpg',
-          title: 'on Board 2 Title',
-          body: 'on Board 2 Body'),
-      BoadingModel(
-          image: 'assets/images/m3.jpg',
-          title: 'on Board 3 Title',
-          body: 'on Board 3 Body'),
-      BoadingModel(
-          image: 'assets/images/m1.jpg',
-          title: 'on Board 4 Title',
-          body: 'on Board 4 Body'),
-    ];
-
     return Scaffold(
       appBar: AppBar(
         actions: [
