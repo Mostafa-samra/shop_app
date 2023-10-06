@@ -22,7 +22,8 @@ class OnBordingScreen extends StatefulWidget {
 }
 
 class _OnBordingScreenState extends State<OnBordingScreen> {
-  // ignore: annotate_overrides
+  bool isLast = false;
+  @override
   Widget build(BuildContext context) {
     var boardController = PageController();
     List<BoadingModel> boarding = [
@@ -44,7 +45,6 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
           body: 'on Board 4 Body'),
     ];
 
-    bool isLast = false;
     return Scaffold(
       appBar: AppBar(
         actions: [
