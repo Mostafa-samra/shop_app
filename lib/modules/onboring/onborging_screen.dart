@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:shop_app/modules/login/login_screen.dart';
 import 'package:shop_app/sheard/components/components.dart';
@@ -50,20 +52,20 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
             onPressed: () {
               navigateAndFinish(
                 context,
-                const LogInScreen(),
+                LogInScreen(),
               );
             },
-            child: const Text('Skip'),
+            child: Text('Skip'),
           ),
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(30.0),
+        padding: EdgeInsets.all(30.0),
         child: Column(
           children: [
             Expanded(
               child: PageView.builder(
-                physics: const BouncingScrollPhysics(),
+                physics: BouncingScrollPhysics(),
                 controller: boardController,
                 onPageChanged: (int index) {
                   if (index == boarding.length - 1) {
@@ -89,7 +91,7 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                 SmoothPageIndicator(
                   controller: boardController,
                   count: boarding.length,
-                  effect: const ExpandingDotsEffect(
+                  effect: ExpandingDotsEffect(
                       dotColor: Colors.grey,
                       activeDotColor: defaultColor,
                       dotHeight: 10,
@@ -97,23 +99,31 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                       dotWidth: 10,
                       spacing: 5),
                 ),
-                const Spacer(),
+                Spacer(),
                 FloatingActionButton(
                   onPressed: () {
+                    print(isLast);
+                    print('حفففف');
                     if (isLast == true) {
-                      navigateAndFinish(
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LogInScreen(),
+                          ));
+                      /*   navigateAndFinish(
                         context,
-                        const LogInScreen(),
-                      );
+                         LogInScreen(),
+                      ); */
+                      print('object');
                     } else {
                       boardController.nextPage(
-                          duration: const Duration(
+                          duration: Duration(
                             milliseconds: 750,
                           ),
                           curve: Curves.fastEaseInToSlowEaseOut);
                     }
                   },
-                  child: const Icon(
+                  child: Icon(
                     Icons.arrow_forward_ios,
                   ),
                 ),
@@ -134,21 +144,21 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
               // width: 200.0,
             ),
           ),
-          const SizedBox(
+          SizedBox(
             height: 30.2,
           ),
           Text(
             model.title,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 24.0,
             ),
           ),
-          const SizedBox(
+          SizedBox(
             height: 15.2,
           ),
           Text(
             model.body,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 15.0,
             ),
           ),
