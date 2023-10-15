@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/modules/login/login_screen.dart';
 import 'package:shop_app/sheard/components/components.dart';
+import 'package:shop_app/sheard/network/local/cache_helper.dart';
 import 'package:shop_app/sheard/styles/colors/colors.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -42,19 +43,27 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
         body: 'on Board 4 Body'),
   ];
 
+  void submit() {
+    CacheHelper.saveDate(key: 'onBoarding', value: true).then((value) {
+      if (value) {
+        navigateAndFinish(
+          context,
+          const LogInScreen(),
+        );
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          TextButton(
-            onPressed: () {
-              navigateAndFinish(
-                context,
-                const LogInScreen(),
-              );
+          defaultTextButton(
+            function: () {
+              submit();
             },
-            child: const Text('Skip'),
+            text: 'Skip',
           ),
         ],
       ),
@@ -104,11 +113,7 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                     print(isLast);
                     print('حفففف');
                     if (isLast == true) {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LogInScreen(),
-                          ));
+                      submit();
 
                       print('object');
                     } else {
