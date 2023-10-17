@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_null_comparison
+// ignore_for_file: unnecessary_null_comparison, unused_local_variable
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,6 +6,7 @@ import 'package:shop_app/layout/cubit/shop_cubit.dart';
 import 'package:shop_app/layout/shoplayout.dart';
 import 'package:shop_app/modules/login/login_screen.dart';
 import 'package:shop_app/modules/onboring/onborging_screen.dart';
+import 'package:shop_app/sheard/components/constants.dart';
 import 'package:shop_app/sheard/cubit/app_cubit.dart';
 import 'package:shop_app/sheard/network/local/cache_helper.dart';
 import 'package:shop_app/sheard/styles/themes/dark_themes.dart';
@@ -16,7 +17,7 @@ void main() async {
   bool isDark = CacheHelper.getData(key: 'isDark');
   Widget widget;
   bool onBoarding = CacheHelper.getData(key: 'onBoarding');
-  String token = CacheHelper.getData(key: 'token');
+  token = CacheHelper.getData(key: 'token');
 
   if (onBoarding != null) {
     if (token != null) {
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => AppCubit(),
+          create: (context) => AppCubit()..changeAppMode(fromShared: isDark),
         ),
         BlocProvider(
           create: (context) => ShopCubit()..getHomeData(),

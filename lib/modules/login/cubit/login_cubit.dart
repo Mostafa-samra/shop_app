@@ -18,7 +18,7 @@ class LoginCubit extends Cubit<LoginState> {
   }) {
     emit(LoginLoadingState());
 
-    DioHelper.postDate(url: login, data: {
+    DioHelper.postData(url: login, data: {
       'email': email,
       'password': password,
     }).then((value) {

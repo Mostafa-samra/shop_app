@@ -5,6 +5,7 @@ import 'package:shop_app/modules/catogeros/catogeress_screen.dart';
 import 'package:shop_app/modules/favorates/favorates_screen.dart';
 import 'package:shop_app/modules/prodactes/prodactes_screen.dart';
 import 'package:shop_app/modules/settinges/settinges_screen.dart';
+import 'package:shop_app/sheard/components/constants.dart';
 import 'package:shop_app/sheard/network/endpoint.dart';
 import 'package:shop_app/sheard/network/remote/dio_helper.dart';
 
@@ -30,8 +31,9 @@ class ShopCubit extends Cubit<ShopState> {
 
   void getHomeData() {
     emit(ShopLoadingHomeDataState());
-    DioHelper.getDate(
+    DioHelper.getData(
       url: home,
+      token: token,
     ).then((value) {
       homeModel = HomeModel.fromJson(value.data);
       emit(ShopSuccesHomeDataState());
