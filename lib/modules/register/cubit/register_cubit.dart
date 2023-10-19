@@ -4,29 +4,33 @@ import 'package:shop_app/models/login_model.dart';
 import 'package:shop_app/sheard/network/endpoint.dart';
 import 'package:shop_app/sheard/network/remote/dio_helper.dart';
 
-part 'login_state.dart';
+part 'register_state.dart';
 
-class LoginCubit extends Cubit<LoginState> {
-  LoginCubit() : super(LoginInitialState());
-  static LoginCubit get(context) => BlocProvider.of(context);
+class RegisterCubit extends Cubit<RegisterState> {
+  RegisterCubit() : super(RegisterInitialState());
+  static RegisterCubit get(context) => BlocProvider.of(context);
 
-  late ShopLoginModel loginModel;
+  late ShopLoginModel registerModel;
 
-  void userLogin({
+  void userRegister({
+    required String name,
     required String email,
     required String password,
+    required String phone,
   }) {
-    emit(LoginLoadingState());
+    emit(RegisterLoadingState());
 
-    DioHelper.postData(url: LOGIN, data: {
+    DioHelper.postData(url: REGISTER, data: {
+      'name': name,
       'email': email,
       'password': password,
+      'phone': phone,
     }).then((value) {
-      loginModel = ShopLoginModel.fromJson(value.data);
-      emit(LoginSuccessState(loginModel: loginModel));
+      registerModel = ShopLoginModel.fromJson(value.data);
+      emit(RegisterSuccessState(registerModel: registerModel));
     }).catchError((onError) {
       emit(
-        LoginErrorState(error: onError.toString()),
+        RegisterErrorState(error: onError.toString()),
       );
     });
   }
@@ -38,6 +42,6 @@ class LoginCubit extends Cubit<LoginState> {
     suffix = isPasswordShow
         ? Icons.visibility_outlined
         : Icons.visibility_off_outlined;
-    emit(ChangePasswordVisibilityState());
+    emit(RegisterPasswordVisibilityState());
   }
 }

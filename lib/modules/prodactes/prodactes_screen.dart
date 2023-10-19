@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/layout/cubit/shop_cubit.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:shop_app/models/categories_model.dart';
 import 'package:shop_app/models/home_model.dart';
+import 'package:shop_app/sheard/components/components.dart';
 import 'package:shop_app/sheard/styles/colors/colors.dart';
 
 class ProductesScreen extends StatelessWidget {
@@ -12,12 +14,21 @@ class ProductesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ShopCubit, ShopState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is ShopSuccesChangeFavoritesState) {
+          if (!state.model.status!) {
+            showToast(text: state.model.message!, states: ToastStates.error);
+          }
+        }
+      },
       builder: (context, state) {
         return ConditionalBuilder(
-            condition: ShopCubit.get(context).homeModel != null,
-            builder: (context) =>
-                prodactesBuilder(ShopCubit.get(context).homeModel!),
+            condition: ShopCubit.get(context).homeModel != null &&
+                ShopCubit.get(context).categoriesModel != null,
+            builder: (context) => prodactesBuilder(
+                ShopCubit.get(context).homeModel!,
+                ShopCubit.get(context).categoriesModel!,
+                context),
             fallback: (context) => const Center(
                   child: CircularProgressIndicator(),
                 ));
@@ -25,7 +36,9 @@ class ProductesScreen extends StatelessWidget {
     );
   }
 
-  Widget prodactesBuilder(HomeModel model) => SingleChildScrollView(
+  Widget prodactesBuilder(
+          HomeModel model, CategoriesModel categoriesModel, context) =>
+      SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
@@ -55,23 +68,70 @@ class ProductesScreen extends StatelessWidget {
             const SizedBox(
               height: 10.0,
             ),
-            GridView.count(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              crossAxisCount: 2,
-              mainAxisSpacing: 1.0,
-              crossAxisSpacing: 1.0,
-              childAspectRatio: 1 / 1.5,
-              children: List.generate(
-                model.date!.products.length,
-                (index) => buildProduct(model.date!.products[index]),
+            const Text(
+              'Categories',
+              style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w800),
+            ),
+            SizedBox(
+              height: 10,
+              child: ListView.separated(
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) =>
+                      buildCategoryItem(categoriesModel.data!.data[index]),
+                  separatorBuilder: (context, index) => const SizedBox(
+                        width: 20.0,
+                      ),
+                  itemCount: categoriesModel.data!.data.length),
+            ),
+            Container(
+              color: Colors.grey[300],
+              child: GridView.count(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                crossAxisCount: 2,
+                mainAxisSpacing: 1.0,
+                crossAxisSpacing: 1.0,
+                childAspectRatio: 1 / 1.5,
+                children: List.generate(
+                  model.date!.products.length,
+                  (index) => buildProduct(model.date!.products[index], context),
+                ),
               ),
             ),
           ],
         ),
       );
 
-  Widget buildProduct(ProdactModel model) => Column(
+  Widget buildCategoryItem(DataModel model) => Stack(
+        alignment: AlignmentDirectional.topCenter,
+        children: [
+          Image(
+            image: NetworkImage(
+              '${model.image}',
+            ),
+            width: 100,
+            height: 100,
+            fit: BoxFit.cover,
+          ),
+          Container(
+              width: 100.0,
+              color: Colors.black.withOpacity(
+                .6,
+              ),
+              child: Text(
+                '${model.name}',
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
+              )),
+        ],
+      );
+
+  Widget buildProduct(ProdactModel model, context) => Column(
         children: [
           Stack(
             alignment: AlignmentDirectional.bottomStart,
@@ -133,8 +193,20 @@ class ProductesScreen extends StatelessWidget {
                       ),
                     const Spacer(),
                     IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.favorite),
+                      onPressed: () {
+                        ShopCubit.get(context).changeFavorites(model.id!);
+                      },
+                      icon: CircleAvatar(
+                        backgroundColor:
+                            ShopCubit.get(context).favorates[model.id]!
+                                ? defaultColor
+                                : Colors.grey,
+                        radius: 15.0,
+                        child: const Icon(
+                          Icons.favorite_border,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ],
                 ),

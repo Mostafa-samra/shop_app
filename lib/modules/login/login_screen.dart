@@ -5,6 +5,7 @@ import 'package:shop_app/layout/shoplayout.dart';
 import 'package:shop_app/modules/login/cubit/login_cubit.dart';
 import 'package:shop_app/modules/register/register_screen.dart';
 import 'package:shop_app/sheard/components/components.dart';
+import 'package:shop_app/sheard/components/constants.dart';
 import 'package:shop_app/sheard/network/local/cache_helper.dart';
 
 class LogInScreen extends StatelessWidget {
@@ -25,7 +26,11 @@ class LogInScreen extends StatelessWidget {
                 key: 'token',
                 value: state.loginModel.data!.token,
               ).then((value) {
-                navigateAndFinish(context, const ShopLayout());
+                token = state.loginModel.data!.token!;
+                navigateAndFinish(
+                  context,
+                  const ShopLayout(),
+                );
               });
               showToast(
                   text: state.loginModel.message!, states: ToastStates.success);
@@ -140,7 +145,7 @@ class LogInScreen extends StatelessWidget {
                               function: () {
                                 navigateAndFinish(
                                   context,
-                                  const RegisterScreen(),
+                                  RegisterScreen(),
                                 );
                               },
                               text: "Register now",
